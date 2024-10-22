@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Iterable, Optional, Sequence, Tuple, Type, Union
+from typing import Any, Iterable, List, Optional, Sequence, Tuple, Type, Union
 
 import numpy as np
 
@@ -159,12 +159,20 @@ class Scalar:
 
     def chain_rule(self, d_output: Any) -> Iterable[Tuple[Variable, Any]]:
         h = self.history
+        if self.is_leaf():
+            return [(self, d_output)]
+
         assert h is not None
         assert h.last_fn is not None
         assert h.ctx is not None
 
-        # TODO: Implement for Task 1.3.
-        raise NotImplementedError("Need to implement for Task 1.3")
+        parents = self.parents
+        ds_for_parents = h.last_fn._backward(h.ctx, d_output)
+        outputs: List[Tuple[Variable, Any]] = []
+        for d, parent in zip(ds_for_parents, parents):
+            outputs += parent.chain_rule(d)
+
+        return outputs
 
     def backward(self, d_output: Optional[float] = None) -> None:
         """
