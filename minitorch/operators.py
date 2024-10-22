@@ -3,7 +3,7 @@
 import math
 
 # ## Task 0.1
-from typing import Callable, Iterable
+from typing import Any, Callable, Iterable
 
 #
 # Implementation of a prelude of elementary functions.
@@ -300,7 +300,7 @@ def relu_back(a: float, n: float) -> float:
 # - prod: take the product of lists
 
 
-def map(f: Callable[..., float], a: Iterable) -> Iterable[float]:
+def map(f: Callable[..., float], a: Iterable[Any]) -> Iterable[float]:
     """Maps a function over an iterable. Given a function `f` and an iterable `a`, returns an iterable that
     contains the results of applying `f` to each element of `a`.
 
@@ -399,7 +399,7 @@ def addLists(a: Iterable[float], b: Iterable[float]) -> Iterable[float]:
     return map(lambda x: add(x[0], x[1]), zipWith(a, b))
 
 
-def sum(a: list) -> float:
+def sum(a: Iterable[float]) -> float:
     """Returns the sum of all elements in a list.
 
     Args:
@@ -414,7 +414,7 @@ def sum(a: list) -> float:
     return reduce(add, a)
 
 
-def prod(a: list) -> float:
+def prod(a: Iterable[float]) -> float:
     """Returns the product of all elements in a list.
 
     Args:
