@@ -149,8 +149,8 @@ class Sigmoid(ScalarFunction):
 
     @staticmethod
     def backward(ctx: Context, d_output: float) -> float:
-        # TODO: Implement for Task 1.4.
-        raise NotImplementedError("Need to implement for Task 1.4")
+        (a,) = ctx.saved_values
+        return operators.sigmoid(a) * (1 - operators.sigmoid(a)) * d_output
 
 
 class ReLU(ScalarFunction):

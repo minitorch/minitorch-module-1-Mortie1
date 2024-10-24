@@ -164,10 +164,10 @@ class Scalar:
         assert h.last_fn is not None
         assert h.ctx is not None
 
-        parents = self.parents
+        inputs = h.inputs
         ds_for_parents = h.last_fn._backward(h.ctx, d_output)
 
-        return [(parent, d) for parent, d in zip(parents, ds_for_parents)]
+        return zip(inputs, ds_for_parents)
 
     def backward(self, d_output: Optional[float] = None) -> None:
         """
